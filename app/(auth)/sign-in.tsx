@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const TabLayout = () => {
+const SignIn = () => {
   return (
     <View>
-      <Text>TabLayout</Text>
+      <Text> SignIn</Text>
     </View>
   )
 }
 
-export default TabLayout
+export default SignIn
