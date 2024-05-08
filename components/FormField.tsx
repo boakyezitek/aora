@@ -19,7 +19,7 @@ const FormField = ({
     keyBoardType,
     placeholder,
 }: FormFieldProps) => {
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState<boolean>(false);
     return (
         <View className={`space-y-2 ${otherStyle}`}>
             <Text className="text-base text-gray-100 font-pmedium">{title}</Text>

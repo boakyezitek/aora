@@ -6,13 +6,18 @@ import FormField from '@/components/FormField'
 import CustomButton from '@/components/CustomButton'
 import { Link } from 'expo-router'
 
+interface FormData {
+  email: string
+  password: string
+}
+
 const SignIn = () => {
-  const [form, setForm] = React.useState({
+  const [form, setForm] = React.useState<FormData>({
     email: '',
     password: ''
   })
 
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const submit = () => {
 
@@ -22,11 +27,11 @@ const SignIn = () => {
     <ScreenView>
       <LogoView />
       <Text className='text-2xl text-white text-semibold mt-10 font-psemibold'>Log in to Aora</Text>
-      <FormField title="Email" value={form.email} handleChangeText={(e) => setForm({ ...form, email: e })}
+      <FormField title="Email" value={form.email} handleChangeText={(e: string) => setForm({ ...form, email: e })}
         otherStyle="mt-7"
         keyBoardType="email-address"
       />
-      <FormField title="Password" value={form.password} handleChangeText={(e) => setForm({ ...form, password: e })}
+      <FormField title="Password" value={form.password} handleChangeText={(e: string) => setForm({ ...form, password: e })}
         otherStyle="mt-7"
       />
       <CustomButton title='Sign In' handlePress={submit} 

@@ -1,4 +1,4 @@
-import { Text, Image, View } from 'react-native'
+import { Text, View } from 'react-native'
 import React from 'react'
 import ScreenView from '@/components/ScreenView'
 import LogoView from '@/components/LogoView'
@@ -6,31 +6,37 @@ import FormField from '@/components/FormField'
 import CustomButton from '@/components/CustomButton'
 import { Link } from 'expo-router'
 
-const SignUp = () => {
-  const [form, setForm] = React.useState({
+type FormData = {
+  username: string;
+  email: string;
+  password: string;
+}
+
+const SignUp: React.FC = () => {
+  const [form, setForm] = React.useState<FormData>({
     username: '',
     email: '',
     password: ''
   })
-
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  
+  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const submit = () => {
-
+    // Add your submit logic here
   }
 
   return (
     <ScreenView>
       <LogoView />
       <Text className='text-2xl text-white text-semibold mt-10 font-psemibold'>Sign up to Aora</Text>
-      <FormField title="Username" value={form.email} handleChangeText={(e) => setForm({ ...form, username: e })}
+      <FormField title="Username" value={form.email} handleChangeText={(e: string) => setForm({ ...form, username: e })}
         otherStyle="mt-7"
       />
-            <FormField title="Email" value={form.email} handleChangeText={(e) => setForm({ ...form, email: e })}
+            <FormField title="Email" value={form.email} handleChangeText={(e: string) => setForm({ ...form, email: e })}
         otherStyle="mt-7"
         keyBoardType="email-address"
       />
-      <FormField title="Password" value={form.password} handleChangeText={(e) => setForm({ ...form, password: e })}
+      <FormField title="Password" value={form.password} handleChangeText={(e: string) => setForm({ ...form, password: e })}
         otherStyle="mt-7"
       />
       <CustomButton title='Sign Up' handlePress={submit} 
