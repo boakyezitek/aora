@@ -5,8 +5,15 @@ import { images } from '@/constants'
 import CustomButton from '@/components/CustomButton'
 import ScreenView from '@/components/ScreenView'
 import LogoView from '@/components/LogoView'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 const App = () => {
+  const {isLoading, isLoggedIn} = useGlobalContext(); 
+
+  if(!isLoading && isLoggedIn) {
+    console.log("redirecting")
+    return <Redirect href="/home" />
+  }
   return (
     <ScreenView isCentered={true}>
        <LogoView />

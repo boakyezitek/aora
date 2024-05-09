@@ -1,10 +1,11 @@
-import { Text, View } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 import React from 'react'
 import ScreenView from '@/components/ScreenView'
 import LogoView from '@/components/LogoView'
 import FormField from '@/components/FormField'
 import CustomButton from '@/components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { registerUser } from '@/lib/appwrite'
 
 type FormData = {
   username: string;
@@ -21,15 +22,28 @@ const SignUp: React.FC = () => {
   
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
-  const submit = () => {
-    // Add your submit logic here
+  const submit = async() => {
+    if(!form.username || !form.email || !form.password) {
+      Alert.alert('Error', 'Please fill in all fields')
+    }
+    setIsSubmitting(true);
+
+    try {
+      const result = await registerUser(form.email, form.password, form.username);
+
+      router.replace('/home')
+    } catch (error: any) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <ScreenView>
       <LogoView />
       <Text className='text-2xl text-white text-semibold mt-10 font-psemibold'>Sign up to Aora</Text>
-      <FormField title="Username" value={form.email} handleChangeText={(e: string) => setForm({ ...form, username: e })}
+      <FormField title="Username" value={form.username} handleChangeText={(e: string) => setForm({ ...form, username: e })}
         otherStyle="mt-7"
       />
             <FormField title="Email" value={form.email} handleChangeText={(e: string) => setForm({ ...form, email: e })}

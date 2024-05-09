@@ -1,10 +1,11 @@
-import { Text, Image, View } from 'react-native'
+import { Text, Alert, View } from 'react-native'
 import React from 'react'
 import ScreenView from '@/components/ScreenView'
 import LogoView from '@/components/LogoView'
 import FormField from '@/components/FormField'
 import CustomButton from '@/components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { signIn } from '@/lib/appwrite'
 
 interface FormData {
   email: string
@@ -19,8 +20,21 @@ const SignIn = () => {
 
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
-  const submit = () => {
+  const submit = async() => {
+    if( !form.email || !form.password) {
+      Alert.alert('Error', 'Please fill in all fields')
+    }
+    setIsSubmitting(true);
 
+    try {
+      await signIn(form.email, form.password);
+
+      router.replace('/home')
+    } catch (error: any) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
