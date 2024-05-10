@@ -29,8 +29,9 @@ const SignUp: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const result = await registerUser(form.email, form.password, form.username);
+      await registerUser(form.email, form.password, form.username);
 
+      Alert.alert('Success', 'User signed up successful')
       router.replace('/home')
     } catch (error: any) {
       Alert.alert('Error', error.message)

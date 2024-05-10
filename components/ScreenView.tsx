@@ -5,10 +5,21 @@ import { StatusBar } from 'expo-status-bar'
 
 interface ScreenProps {
   children: React.ReactNode,
-  isCentered?: boolean
+  isCentered?: boolean,
+  withoutScrollView?: boolean,
 }
 
-const ScreenView = ({isCentered, children}: ScreenProps) => {
+const ScreenView = ({isCentered, withoutScrollView, children}: ScreenProps) => {
+  if(withoutScrollView) {
+    return (
+      <SafeAreaView className="h-full"  style={{backgroundColor: '#161622'}}>
+        <View className={`w-full min-h-[100%] px-4 my-6 ${isCentered ? 'items-center justify-center' : 'justify-center'}`}>
+        {children}
+        </View>
+      <StatusBar backgroundColor="#161622" style="light" />
+    </SafeAreaView>
+    )
+  }
   return (
     <SafeAreaView className="h-full"  style={{backgroundColor: '#161622'}}>
       <ScrollView contentContainerStyle={{height: '100%'}}>
