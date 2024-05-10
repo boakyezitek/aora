@@ -1,6 +1,7 @@
-import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, TextInput, Image, TouchableOpacity, Alert } from "react-native";
+import React, { useState } from "react";
 import { icons } from "@/constants";
+import { router, usePathname } from "expo-router";
 
 interface FormFieldProps {
     value: string;
@@ -8,6 +9,7 @@ interface FormFieldProps {
     otherStyle?: string;
     keyBoardType?: string;
     placeholder?: string;
+    initialQuery?: string;
 }
 
 const SearchInput = ({
@@ -16,8 +18,12 @@ const SearchInput = ({
     otherStyle,
     keyBoardType,
     placeholder,
+    initialQuery,
 }: FormFieldProps) => {
-    const [showPassword, setShowPassword] = React.useState<boolean>(false);
+
+    const pathname = usePathname()
+    const [query, setQuery] = useState<string>(initialQuery || '');
+    
     return (
             <View className="border-2 border-black-200 w-full flex-row h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center space-x-4 ">
                 <TextInput
@@ -25,9 +31,18 @@ const SearchInput = ({
                     value={value}
                     placeholder={placeholder}
                     placeholderTextColor="#7b7b8b"
-                    onChangeText={handleChangeText}
+                    onChangeText={(e) => setQuery(e)}
                 />
-                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                 <TouchableOpacity onPress={() => {
+                    if(!query) {
+                        return Alert.alert('Missing query', "Please input something to search results accross database")
+                    }
+                    if(pathname.startsWith('/search')) {
+                        router.setParams({query: query})
+                    } else {
+                        router.push(`/search/${query}`)
+                    }
+                 }}>
                         <Image source={icons.search} className="w-5 h-5" resizeMode="contain" />
                     </TouchableOpacity>
             </View>

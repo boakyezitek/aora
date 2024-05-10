@@ -190,4 +190,31 @@ export const getCurrentUser = async () => {
     }
   }
 
+  /**
+   * Search posts
+   * 
+   * Returns an array of posts documents in the videos collection
+   * that match the given search query in the 'title' field.
+   * 
+   * @param {string} query - search query
+   * @returns {Promise<any>} array of posts documents
+   */
+  export const searchPosts = async (query: string | string[] | undefined) => {
+    try {
+      const posts = await databases.listDocuments(
+        databaseId, // Database ID
+        videoCollectionId, // Videos collection ID
+        [
+          Query.search('title', query), // Search for matching posts in the 'title' field
+        ],
+      );
+
+      return posts.documents; // Return an array of posts documents
+    } catch (error) {
+      console.log(error);
+      return null; // If an error occurs, return null
+    }
+  }
+
+
 

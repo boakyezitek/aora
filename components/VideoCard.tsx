@@ -89,8 +89,11 @@ const styles = StyleSheet.create({
         height: 240,
         width:'100%',
         borderRadius: 35,
-        marginTop: 12,
         backgroundColor: '#ffffff4d',
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex',
       }
 })
 export default VideoCard;
