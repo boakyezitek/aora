@@ -5,9 +5,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import ScreenView from "@/components/ScreenView";
-import { images } from "@/constants";
 import SearchInput from "@/components/SearchInput";
-import Trending from "@/components/Trending";
 import EmptyState from "@/components/EmptyState";
 import { searchPosts } from "@/lib/appwrite";
 import { Posts } from "@/types/PostType";
@@ -17,7 +15,7 @@ import { useLocalSearchParams } from "expo-router";
 
 const Query = () => {
   const {query } = useLocalSearchParams()
-  const { data: posts, isLoading: postLoading, refetch: refetchPost } = useAppwrite(() => searchPosts(query), Posts);
+  const { data: posts, refetch: refetchPost } = useAppwrite(() => searchPosts(query), Posts);
   
   useEffect(() => {
     refetchPost()
@@ -26,7 +24,6 @@ const Query = () => {
     <ScreenView withoutScrollView={true}>
       <FlatList
         data={posts}
-        // data={[]}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
           <VideoCard video={item} />

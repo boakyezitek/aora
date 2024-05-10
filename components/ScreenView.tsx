@@ -22,7 +22,7 @@ const ScreenView = ({isCentered, withoutScrollView, children}: ScreenProps) => {
   }
   return (
     <SafeAreaView className="h-full"  style={{backgroundColor: '#161622'}}>
-      <ScrollView contentContainerStyle={{height: '100%'}}>
+      <ScrollView >
         <View className={`w-full min-h-[85vh] px-4 my-6 ${isCentered ? 'items-center justify-center' : 'justify-center'}`}>
         {children}
         </View>

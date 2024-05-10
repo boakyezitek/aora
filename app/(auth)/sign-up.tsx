@@ -6,6 +6,7 @@ import FormField from '@/components/FormField'
 import CustomButton from '@/components/CustomButton'
 import { Link, router } from 'expo-router'
 import { registerUser } from '@/lib/appwrite'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 type FormData = {
   username: string;
@@ -19,7 +20,7 @@ const SignUp: React.FC = () => {
     email: '',
     password: ''
   })
-  
+  const {setUser, setIsLogged} = useGlobalContext();
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const submit = async() => {
@@ -29,8 +30,9 @@ const SignUp: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      await registerUser(form.email, form.password, form.username);
-
+      const result  = await registerUser(form.email, form.password, form.username);
+      setUser(result);
+      setIsLogged(true);
       Alert.alert('Success', 'User signed up successful')
       router.replace('/home')
     } catch (error: any) {

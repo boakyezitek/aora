@@ -16,12 +16,13 @@ import { getAllPosts, getLatestPosts } from "@/lib/appwrite";
 import { Posts } from "@/types/PostType";
 import useAppwrite from "@/lib/useAppwrite";
 import VideoCard from "@/components/VideoCard";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const Home = () => {
   const { data: posts, isLoading: postLoading, refetch: refetchPost } = useAppwrite(getAllPosts, Posts);
   const { data: latestPosts, isLoading: latestLoading, refetch:refetchLatestPost } = useAppwrite(getLatestPosts, Posts);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  
+  const { user } = useGlobalContext();
   const onRefresh = async () => {
     setRefreshing(true);
     refetchPost()
@@ -44,7 +45,7 @@ const Home = () => {
                   Welecome back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  tonacode
+                  {user?.username}
                 </Text>
               </View>
               <View className="mt-1.5">
